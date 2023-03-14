@@ -20,17 +20,31 @@ extension UIView {
 }
 
 extension UIStackView {
-    convenience init(arrangedSubviews: [UIView], spacing: Double, axis: NSLayoutConstraint.Axis) {
+    convenience init(_ category: Category) {
+        self.init(Utility.rowViews(for: category))
+    }
+    
+    convenience init(_ arrangedSubviews: [UIView],
+                     spacing: Double = 10,
+                     axis: NSLayoutConstraint.Axis = .horizontal) {
         self.init(arrangedSubviews: arrangedSubviews)
         fill(with: spacing, axis: axis)
     }
     
-    @discardableResult func fill(with spacing: Double, axis: NSLayoutConstraint.Axis) -> UIStackView {
+    @discardableResult func fill(with spacing: Double,
+                                 axis: NSLayoutConstraint.Axis) -> UIStackView {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.alignment = .fill
         self.distribution = .fill
         self.spacing = spacing
         self.axis = axis
         return self
+    }
+    
+    func anchorCenter(to view: UIView, padding: CGFloat = 100) {
+        view.addSubview(self)
+        widthAnchor.constraint(equalTo: view.widthAnchor, constant: -padding).isActive = true
+        centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
 }

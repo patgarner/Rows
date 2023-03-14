@@ -8,6 +8,10 @@
 import UIKit
 
 struct Utility {
+    static func rowViews(for category: Category) -> [UIView] {
+         [createIcon(category), createName(category), createSpacer(), createAmount(category)]
+    }
+    
     static func createIcon(_ category: Category) -> UIImageView {
         let image = UIImage(systemName: category.image)
         let icon = UIImageView(image:image)
